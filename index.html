@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap" rel="stylesheet">
+    <title>Converted of obsolete metrics</title>
+    <script src="main.js" defer></script>
+    <style>
+        body {
+            background-image: url(clock.jpg);
+            background-size: 100% 100%;
+            background-position: center;
+        }
+
+        h2 {
+            color: #ff0057;
+            font-family: 'Reenie Beanie';
+            font-weight: bold;
+            font-size: 40px;
+        }
+
+        table {
+            margin-top: 7rem;
+            display: table
+        }
+
+        .mobile {
+            display: none;
+            margin-top: 4rem;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            color: #dc3545;
+        }
+
+        /* animation */
+        .animationForAlert {
+            position: absolute;
+            width: 98vw;
+            transform: translateX(-200vw);
+            transition: transform 1s ease-in-out;
+        }
+
+        .animationForAlert.move {
+            transform: translateX(0);
+        }
+
+        @media(max-width: 555px) {
+            body {
+                height: 100%;
+            }
+
+            .table,
+            .btn-info {
+                display: none;
+            }
+
+            .mobile {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="text-center">OBSOLETE UNITS OF MEASUREMENT CONVERTER</h2>
+
+        <div class="mt-4 d-flex flex-column flex-sm-row mb-3 col-sm-12 mx-auto">
+            <p class="bg-primary m-0 text-center text-warning border border-2 border-info rounded-3">
+                Which metric do you
+                want
+                to convert?
+            </p>
+            <select class="form-select metric_select_mobile" id="metric_select">
+                <option value="length" selected>Length</option>
+                <option value="weight">Weight</option>
+                <option value="volume">Volume</option>
+            </select>
+
+        </div>
+
+        <div class="mobile">
+            <p>TO BE CONVERTED</p>
+            <select class="form-select to_be_converted_mobile">
+                <option value="ald" selected>ald</option>
+                <option value="alen">alen</option>
+                <option value="arabic_mile">arabic mile</option>
+                <option value="bamboo">bamboo</option>
+                <option value="barleycorn">barleycorn</option>
+                <option value="cana">cana</option>
+                <option value="girah">girah</option>
+                <option value="macedonian_cubit">macedonian cubit</option>
+                <option value="pes">pes</option>
+                <option value="unglie">unglie</option>
+            </select>
+
+            <p class="mt-3">VALUE</p>
+            <input type="number" class="form-control" id="input_mobile">
+
+            <p class="mt-3">CONVERT TO</p>
+            <select class="form-select convert_to_mobile">
+                <option value="mm" selected>millimeters</option>
+                <option value="cm">centimeters</option>
+                <option value="m">meters</option>
+                <option value="km">kilometers</option>
+            </select>
+
+            <div class="d-flex">
+                <div class="col">
+                    <p class="mt-3">RESULT</p>
+                    <input type="number" class="form-control" id="mobile_result" disabled>
+                </div>
+                <div class="accordion-body d-flex flex-column">
+                    <p>COPY</p>
+                    <a tabindex="0" class="btn btn-secondary copy_mobile" role="button" data-bs-container="body"
+                        data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Copied"
+                        data-bs-trigger="focus">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-clipboard" viewBox="0 0 16 16">
+                            <path
+                                d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                            <path
+                                d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <table class="table table-success table-bordered table-striped table-sm text-center mb-0">
+        <thead class="align-middle">
+            <tr>
+                <th scope="col">To be converted</th>
+                <th scope="col">Value</th>
+                <th scope="col">Convert to</th>
+                <th scope="col">Result</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <!-- The value to be converted -->
+                <td scope="row">
+                    <select class="form-select to_be_converted to_be_converted_0" data-point="0">
+                        <option value="ald" selected>ald</option>
+                        <option value="alen">alen</option>
+                        <option value="arabic_mile">arabic mile</option>
+                        <option value="bamboo">bamboo</option>
+                        <option value="barleycorn">barleycorn</option>
+                        <option value="cana">cana</option>
+                        <option value="girah">girah</option>
+                        <option value="macedonian_cubit">macedonian cubit</option>
+                        <option value="pes">pes</option>
+                        <option value="unglie">unglie</option>
+                    </select>
+                </td>
+                <!-- User input -->
+                <td><input type="number" class="form-control input" data-point="0"></td>
+                <!-- Convert to -->
+                <td>
+                    <select class="form-select convert_to convert_to_0" data-point="0">
+                        <option value="mm" selected>millimeters</option>
+                        <option value="cm">centimeters</option>
+                        <option value="m">meters</option>
+                        <option value="km">kilometers</option>
+                    </select>
+                </td>
+                <td style="display: flex;">
+                    <!-- Result input -->
+                    <input type="number" class="form-control" id="result_0" disabled>
+                    <!-- Copy button -->
+                    <a tabindex="0" class="btn btn-secondary" role="button" id="copy_0" style="border: none;"
+                        data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top"
+                        data-bs-content="Copied" data-bs-trigger="focus">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-clipboard" viewBox="0 0 16 16">
+                            <path
+                                d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                            <path
+                                d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                        </svg>
+                    </a>
+                </td>
+                <td>
+                    <!-- Delete button -->
+                    <button type="button" title="Delete row" class="btn btn-danger" id="delete_0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-trash-fill" viewBox="0 0 16 16">
+                            <path
+                                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                        </svg>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="mt-5 mx-auto d-grid col-6">
+        <button class="btn btn-info" id="add_row">Add a row</button>
+    </div>
+
+    <div class="animationForAlert">
+        <div class="alert alert-primary d-flex align-items-center" role="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img"
+                aria-label="Warning:">
+                <path
+                    d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+            </svg>
+            <div>
+                The number you entered is too huge, try a smaller one.
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
+    </script>
+
+</body>
+
+</html>
